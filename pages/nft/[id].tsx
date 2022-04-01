@@ -1,7 +1,10 @@
 import { useAddress, useMetamask, useDisconnect } from '@thirdweb-dev/react'
+import { useRouter } from 'next/router'
 import React from 'react'
+import { HomeIcon } from '@heroicons/react/outline'
 
 const NFTDropPage = () => {
+  const router = useRouter()
 
   // Authentication
   const connectWithMetamask = useMetamask()
@@ -14,7 +17,10 @@ const NFTDropPage = () => {
     <div className="flex h-screen flex-col lg:grid lg:grid-cols-10">
       {/* Left  */}
       <div className="bg-gradient-to-br from-cyan-800 to-rose-500 lg:col-span-4">
-        <div className="flex flex-col items-center justify-center py-2 lg:min-h-screen">
+        <HomeIcon onClick={() => router.back()} className="h-7 text-cyan-600 m-2 cursor-pointer
+        transition-all transform duration-150 ease-out hover:text-gray-100" />
+        <div className="flex flex-col items-center justify-center pb-2 lg:min-h-screen">
+          
           <div className="rounded-xl bg-gradient-to-br from-yellow-400 via-red-300 to-indigo-600 p-2">
             <img
               className="w-44 rounded-xl object-cover lg:h-96 lg:w-72"
