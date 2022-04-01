@@ -18,8 +18,8 @@ const NFTDropPage = () => {
       {/* Left  */}
       <div className="bg-gradient-to-br from-cyan-800 to-rose-500 lg:col-span-4">
         <HomeIcon onClick={() => router.back()} className="h-7 text-cyan-600 m-2 cursor-pointer
-        transition-all transform duration-150 ease-out hover:text-gray-100" />
-        <div className="flex flex-col items-center justify-center pb-2 lg:min-h-screen">
+        absolute transition-all transform duration-150 ease-out hover:text-gray-100" />
+        <div className="flex flex-col items-center justify-center py-2 lg:min-h-screen">
           
           <div className="rounded-xl bg-gradient-to-br from-yellow-400 via-red-300 to-indigo-600 p-2">
             <img
