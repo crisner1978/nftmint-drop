@@ -11,7 +11,7 @@ const Home: NextPage = () => {
         <title>NFT Mint Drop</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1 className="text-red-700">Welcome to the NFT Mint DROP Chainbytes</h1>
+      <h1 className="text-red-700">Welcome to the NFT Mint DROP PAPARISE</h1>
       <div className="flex h-full items-center justify-center">
         <button onClick={() => router.push("/nft/paparise")}
           className="font-deca transform bg-gradient-to-r from-blue-800 to-blue-500 bg-clip-text 
