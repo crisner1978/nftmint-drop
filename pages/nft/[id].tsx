@@ -4,6 +4,7 @@ import React from 'react'
 import { GetServerSideProps } from 'next'
 import { sanityClient, urlFor } from 'lib/sanity'
 import { Collection } from 'typings'
+import Link from 'next/link'
 
 interface Props {
   collection: Collection
@@ -25,7 +26,7 @@ const NFTDropPage = ({ collection }: Props) => {
       {/* Left  */}
       <div className="bg-gradient-to-br from-cyan-800 to-rose-500 dark:from-blue-900  dark:via-black dark:to-pink-900 lg:col-span-4">
         <div className="flex flex-col items-center justify-center py-2 lg:min-h-screen">
-          <div className="rounded-xl bg-gradient-to-br from-yellow-400 via-red-300 to-indigo-600 dark:from-rose-900 dark:via-blue-700/50 dark:to-violet-900 p-2">
+          <div className="rounded-xl bg-gradient-to-br from-yellow-400 via-red-300 to-indigo-600 p-2 dark:from-rose-900 dark:via-blue-700/50 dark:to-violet-900">
             <img
               className="w-44 rounded-xl object-cover lg:h-96 lg:w-72"
               src={urlFor(collection.previewImage.asset).url()}
@@ -43,22 +44,24 @@ const NFTDropPage = ({ collection }: Props) => {
       </div>
 
       {/* Right */}
-      <div className="flex flex-1 flex-col bg-gradient-to-b from-white to-gray-50 dark:from-black dark:to-gray-900 px-4 py-12 sm:p-12 lg:col-span-6">
+      <div className="flex flex-1 flex-col bg-gradient-to-b from-white to-gray-50 px-4 py-12 dark:from-black dark:to-gray-900 sm:p-12 lg:col-span-6">
         <header className="flex items-center justify-between">
-          <h1 className="w-52 cursor-pointer text-xl font-extralight sm:w-80">
-            The{' '}
-            <span className="font-extrabold underline decoration-pink-600/50 dark:decoration-red-400">
-              PAPARISE
-            </span>{' '}
-            NFT Market Place
-          </h1>
+          <Link href="/">
+            <h1 className="w-52 cursor-pointer text-xl font-extralight sm:w-80">
+              The{' '}
+              <span className="font-extrabold underline decoration-pink-600/50 dark:decoration-red-400">
+                PAPARISE
+              </span>{' '}
+              NFT Market Place
+            </h1>
+          </Link>
 
           <button
             onClick={() => (address ? disconnect() : connectWithMetamask())}
             className={`${
               address
                 ? 'signInBtn bg-gray-500  hover:ring-gray-600/50 dark:hover:ring-slate-300'
-                : 'signInBtn bg-red-400 dark:bg-pink-900 dark:hover:bg-gray-200  hover:ring-pink-600/50 dark:hover:ring-red-400'
+                : 'signInBtn bg-red-400 hover:ring-pink-600/50 dark:bg-pink-900  dark:hover:bg-gray-200 dark:hover:ring-red-400'
             }`}
           >
             {address ? 'Sign Out' : 'Sign In'}
@@ -87,7 +90,9 @@ const NFTDropPage = ({ collection }: Props) => {
           <h1 className="text-3xl font-bold lg:text-5xl lg:font-extrabold">
             {collection?.title}
           </h1>
-          <p className="pt-2 text-xl text-green-500 dark:brightness-125">13 / 21 NFT's claimed</p>
+          <p className="pt-2 text-xl text-green-500 dark:brightness-125">
+            13 / 21 NFT's claimed
+          </p>
         </div>
 
         {/* Mint Button */}
