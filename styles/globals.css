@@ -7,6 +7,13 @@
   .signInBtn {
     @apply rounded-full px-4 py-2 text-xs hover:text-gray-900
     font-bold text-white lg:px-5 lg:py-3 lg:text-base hover:scale-105 transition-all
-    transform duration-150 ease-out hover:ring-4 hover:bg-white active:scale-95
+    transform duration-150 ease-out hover:ring-2 hover:bg-white active:scale-95
+  }
+  .navSunIcon {
+    @apply transition-all transform duration-150 h-7 cursor-pointer text-cyan-600 hover:animate-none
+    active:brightness-110 hover:text-yellow-400 animate-pulse m-2 absolute right-0  }
+  .navMoonIcon {
+    @apply transition-all transform duration-150 h-7 cursor-pointer text-cyan-600 hover:animate-none
+    active:brightness-110 lg:hover:text-gray-500 animate-pulse m-2 hover:text-gray-300 absolute right-0;
   }
 }

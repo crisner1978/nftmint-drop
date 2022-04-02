@@ -1,12 +1,12 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
-import { ThirdwebProvider, ChainId } from '@thirdweb-dev/react'
+import { AppProps } from 'next/app'
+import AppProvider from 'components/AppProvider'
+import 'styles/globals.css'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThirdwebProvider desiredChainId={ChainId.Rinkeby}>
+    <AppProvider>
       <Component {...pageProps} />
-    </ThirdwebProvider>
+    </AppProvider>
   )
 }
 
