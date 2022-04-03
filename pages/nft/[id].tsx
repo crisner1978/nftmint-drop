@@ -1,17 +1,32 @@
-import { useAddress, useMetamask, useDisconnect } from '@thirdweb-dev/react'
-import { useRouter } from 'next/router'
-import React from 'react'
-import { GetServerSideProps } from 'next'
+import {
+  useAddress,
+  useDisconnect,
+  useMetamask,
+  useNFTDrop,
+} from '@thirdweb-dev/react'
+import { modalState } from 'atoms/modalAtom'
+import { BigNumber } from 'ethers'
 import { sanityClient, urlFor } from 'lib/sanity'
-import { Collection } from 'typings'
+import { GetServerSideProps } from 'next'
 import Link from 'next/link'
+import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
+import { useRecoilState } from 'recoil'
+import { Collection } from 'typings'
+import { nftState } from 'atoms/nftAtom'
 
 interface Props {
   collection: Collection
 }
 
 const NFTDropPage = ({ collection }: Props) => {
-  const router = useRouter()
+  const [open, setOpen] = useRecoilState(modalState);
+  const [nftData, setNftData] = useRecoilState(nftState)
+  const [claimedSupply, setClaimedSupply] = useState<number>(0)
+  const [totalSupply, setTotalSupply] = useState<BigNumber>()
+  const [loading, setLoading] = useState<boolean>(true)
+  const [priceInEth, setPriceInEth] = useState<string>()
+  const nftDrop = useNFTDrop(collection.address)
   console.log('collection', collection)
 
   // Authentication
@@ -19,7 +34,88 @@ const NFTDropPage = ({ collection }: Props) => {
   const address = useAddress()
   const disconnect = useDisconnect()
 
-  console.log('address', address)
+  useEffect(() => {
+    if (!nftDrop) return
+    const fetchPrice = async () => {
+      const claimConditions = await nftDrop.claimConditions.getAll()
+      setPriceInEth(claimConditions?.[0].currencyMetadata.displayValue)
+    }
+    fetchPrice()
+  }, [nftDrop])
+
+  useEffect(() => {
+    if (!nftDrop) return
+    const fetchNFTDropData = async () => {
+      setLoading(true)
+      const claimed = await nftDrop.getAllClaimed()
+      const total = await nftDrop.totalSupply()
+      setClaimedSupply(claimed.length)
+      setTotalSupply(total)
+      setLoading(false)
+    }
+    fetchNFTDropData()
+  }, [nftDrop])
+
+  const mintNft = () => {
+    if (!nftDrop || !address) return
+    const quantity = 1 // how many unique NFT's you want to claim
+
+    setLoading(true)
+    const notification = toast.loading('Minting....', {
+      style: {
+        background: 'white',
+        color: 'green',
+        fontWeight: 'bolder',
+        fontSize: '17px',
+        padding: '20px',
+      },
+    })
+
+    nftDrop
+      .claimTo(address, quantity)
+      .then(async (tx) => {
+        const receipt = tx[0].receipt // the transaction receipt
+        const claimedTokenId = tx[0].id // the id of the NFT claimed
+        const claimedNFT = await tx[0].data() // (optional) get the claimed NFT metadata
+        setNftData({
+          receipt,
+          claimedTokenId,
+          claimedNFT,
+        })
+        setOpen(true)
+        toast("HOORAY... You Successfully Minted!", {
+          duration: 8000,
+          style: {
+            background: "green",
+            color: "white",
+            fontWeight: "bolder",
+            fontSize: "17px",
+            padding: "20px",
+          }
+        })
+
+        console.log('tx', tx)
+        console.log('receipt', receipt)
+        console.log('claimedTokenId', claimedTokenId)
+        console.log('claimedNFT', claimedNFT)
+      })
+      .catch((err) => {
+        console.log('err', err)
+        toast("Whoops... Something went wrong!", {
+          style: {
+            background: "red",
+            color: 'white',
+            fontWeight: "bolder",
+            fontSize: "17px",
+            padding: "20px",
+          }
+        })
+      })
+      .finally(() => {
+        setLoading(false)
+        toast.dismiss(notification)
+      })
+  }
 
   return (
     <div className="flex h-screen flex-col overflow-y-scroll scrollbar-hide lg:grid lg:grid-cols-10">
@@ -87,23 +183,49 @@ const NFTDropPage = ({ collection }: Props) => {
             alt="NFT"
           />
 
-          <h1 className="text-3xl font-bold lg:text-5xl lg:font-extrabold">
+          <h1 className="text-3xl font-bold lg:text-4xl lg:font-extrabold">
             {collection?.title}
           </h1>
-          <p className="pt-2 text-xl text-green-500 dark:brightness-125">
-            13 / 21 NFT's claimed
-          </p>
+          {loading ? (
+            <p className="animate-pulse pt-2 text-xl text-green-500 dark:brightness-125">
+              Loading Supply Count...
+            </p>
+          ) : (
+            <p className="pt-2 text-xl text-green-500 dark:brightness-125">
+              {claimedSupply} / {totalSupply?.toString()} NFT's claimed
+            </p>
+          )}
+
+          {loading && (
+            <img
+              className="h-80 w-80 object-contain"
+              src="https://cdn.hackernoon.com/images/0*4Gzjgh9Y7Gu8KEtZ.gif"
+              alt=""
+            />
+          )}
         </div>
 
         {/* Mint Button */}
-        {address && (
-          <button
-            className="mt-10 h-16 w-full transform rounded-full bg-gradient-to-br from-blue-500 to-indigo-700 font-bold
-        text-white transition-all duration-150 ease-out active:scale-95"
-          >
-            Mint NFT (0.01 ETH)
-          </button>
-        )}
+        <button
+          onClick={mintNft}
+          disabled={
+            loading || claimedSupply === totalSupply?.toNumber() || !address
+          }
+          className="mt-10 h-16 w-full transform rounded-full bg-gradient-to-br from-blue-500 to-indigo-700 font-bold
+          text-white transition-all duration-150 ease-out active:scale-95 disabled:from-gray-700 disabled:to-gray-400 disabled:text-gray-400"
+        >
+          {loading ? (
+            <>Loading</>
+          ) : claimedSupply === totalSupply?.toNumber() ? (
+            <>SOLD OUT</>
+          ) : !address ? (
+            <>Sign in to Mint</>
+          ) : !priceInEth ? (
+            <>Loading</>
+          ) : (
+            <span className="font-bold">Mint NFT ({priceInEth} ETH)</span>
+          )}
+        </button>
       </div>
     </div>
   )

@@ -1,10 +1,8 @@
+import { sanityClient, urlFor } from 'lib/sanity'
 import type { GetServerSideProps } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { sanityClient, urlFor } from 'lib/sanity'
-import { Collection } from "typings"
+import { Collection } from 'typings'
 
 interface Props {
   collections: Collection[]
@@ -14,10 +12,6 @@ const Home = ({ collections }: Props) => {
   const router = useRouter()
   return (
     <div className="m-auto flex h-screen max-w-7xl flex-col overflow-y-scroll py-20 px-10 scrollbar-hide 2xl:px-0">
-      <Head>
-        <title>NFT Mint Drop</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <h1 className="mb-10 text-4xl font-extralight">
         The{' '}
         <span className="font-extrabold underline decoration-pink-600/50">

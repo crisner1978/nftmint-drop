@@ -9,11 +9,13 @@
     font-bold text-white lg:px-5 lg:py-3 lg:text-base hover:scale-105 transition-all
     transform duration-150 ease-out hover:ring-2 hover:bg-white active:scale-95
   }
+  /* Icons */
   .navSunIcon {
-    @apply transition-all transform duration-150 h-7 cursor-pointer text-cyan-600 hover:animate-none
-    active:brightness-110 hover:text-yellow-400 animate-pulse m-2 absolute right-0  }
-  .navMoonIcon {
-    @apply transition-all transform duration-150 h-7 cursor-pointer text-cyan-600 hover:animate-none
-    active:brightness-110 lg:hover:text-gray-500 animate-pulse m-2 hover:text-gray-300 absolute right-0;
+    @apply transition-all transform duration-150 h-6 cursor-pointer text-cyan-600 absolute
+    active:brightness-110 hover:text-yellow-400 animate-pulse m-2 absolute right-0}
+  .homeIcon {
+    @apply lg:hidden h-6 text-cyan-600/60 m-2 cursor-pointer lg:col-span-4
+    absolute transition-all transform duration-150 ease-out hover:text-gray-300
+    animate-pulse
   }
 }
