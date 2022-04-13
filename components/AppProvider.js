@@ -19,7 +19,7 @@ const AppProvider = ({ children }) => {
           <Header />
           {children}
           <Modal />
-          <Toaster position="bottom-center" />
+          <Toaster position="bottom-left" />
         </RecoilRoot>
       </ThemeProvider>
     </ThirdwebProvider>

@@ -76,20 +76,3 @@ const Modal = () => {
 
 export default Modal;
 
-// "owner": "0x7a2F531F219454e74001A4D536FdcF93E31936Da",
-//     "metadata": {
-//         "name": "#5",
-//         "description": "A PAPAFAM Ape",
-//         "image": "https://gateway.ipfscdn.io/ipfs/QmecgHz9dM171cR4JxSaw2B3uzWtQvLYjhBzNZJ3N1EX2c/5.png",
-//         "id": {
-//             "type": "BigNumber",
-//             "hex": "0x05"
-//         },
-//         "uri": "ipfs://QmR3zsDrnxUYThSoPZXCQViqquLLhcN18VFDwuS4pnJJHS/5",
-//         "properties": {
-//             "Shirt": "black",
-//             "Fur": "brown",
-//             "Hat": "bunny ears",
-//             "Eyes": "zombie"
-//         }
-//     }

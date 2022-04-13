@@ -12,7 +12,8 @@
   /* Icons */
   .navSunIcon {
     @apply transition-all transform duration-150 h-6 cursor-pointer text-cyan-600 absolute
-    active:brightness-110 hover:text-yellow-400 animate-pulse m-2 absolute right-0}
+    active:brightness-110 hover:text-yellow-400 animate-pulse m-2 right-0
+  }
   .homeIcon {
     @apply lg:hidden h-6 text-cyan-600/60 m-2 cursor-pointer lg:col-span-4
     absolute transition-all transform duration-150 ease-out hover:text-gray-300

@@ -10,6 +10,7 @@ interface Props {
 
 const Home = ({ collections }: Props) => {
   const router = useRouter()
+
   return (
     <div className="m-auto flex h-screen max-w-7xl flex-col overflow-y-scroll py-20 px-10 scrollbar-hide 2xl:px-0">
       <h1 className="mb-10 text-4xl font-extralight">
@@ -19,6 +20,7 @@ const Home = ({ collections }: Props) => {
         </span>{' '}
         NFT Market Place
       </h1>
+      
       <main className="bg-slate-200 p-10 shadow-xl shadow-rose-400/20 dark:bg-slate-800 dark:shadow-pink-600/30">
         <div className="grid space-x-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {collections.map((collection) => (
