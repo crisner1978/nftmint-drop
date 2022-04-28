@@ -12,7 +12,7 @@ const Home = ({ collections }: Props) => {
   const router = useRouter()
 
   return (
-    <div className="m-auto flex h-screen max-w-7xl flex-col overflow-y-scroll py-20 px-10 scrollbar-hide 2xl:px-0">
+    <div className="m-auto flex h-screen max-w-7xl flex-col overflow-y-scroll py-20 px-10 scrollbar-hide 2xl:px-0 bg-white dark:bg-gray-900">
       <h1 className="mb-10 text-4xl font-extralight">
         The{' '}
         <span className="font-extrabold underline decoration-pink-600/50">
